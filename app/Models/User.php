@@ -12,35 +12,55 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Model representing users in the application, extending Laravel's Authenticatable.
+ * Provides functionalities for user roles, access control, and relationships with posts and comments.
+ */
 class User extends Authenticatable implements FilamentUser
 {
+    /**
+     * This line declares the User class, extending Laravel's Authenticatable class
+     * and implementing the FilamentUser contract.
+     */
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    const ROLE_ADMIN = 'ADMIN';
-    const ROLE_EDITOR = 'EDITOR';
-    const ROLE_USER = 'USER';
-    const ROLE_DEFAULT = self::ROLE_USER;
+    /*  These lines apply various traits to the User class,
+        providing additional functionality such as API token management,
+        factory support, profile photo handling, notification capabilities,
+        and two-factor authentication. */
 
-    const ROLES = [
+    public const ROLE_ADMIN = 'ADMIN';
+    public const ROLE_EDITOR = 'EDITOR';
+    public const ROLE_USER = 'USER';
+    public const ROLE_DEFAULT = self::ROLE_USER;
+
+    // These lines define constants for different user roles, with 'USER' being the default role.
+    public const ROLES = [
         self::ROLE_ADMIN => 'Admin',
         self::ROLE_EDITOR => 'Editor',
         self::ROLE_USER => 'User',
     ];
 
+    // This line defines an array mapping user role constants to human-readable labels.
     public function canAccessPanel(Panel $panel): bool
     {
+        // This line declares a method that checks if the user can access a specific administrative panel.
         return $this->can('view-admin', User::class);
     }
 
-    public function isAdmin(){
+    // This line checks the user's permissions using Laravel's authorization system.
+    public function isAdmin()
+    {
         return $this->role === self::ROLE_ADMIN;
     }
 
-    public function isEditor(){
+    // This line checks the user's permissions using Laravel's authorization system.
+    public function isEditor()
+    {
         return $this->role === self::ROLE_EDITOR;
     }
 
@@ -53,7 +73,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
-        'role'
+        'role',
     ];
 
     /**
