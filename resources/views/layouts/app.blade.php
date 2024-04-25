@@ -32,7 +32,7 @@ styles, banner, header, hero section, main content slot, footer, and modals. --}
     @include('layouts.partials.header')
 
     <!-- Hero Section -->
-    @yield('hero')s
+    @yield('hero')
 
     <!-- Main Content -->
     <main class="container flex flex-grow px-5 mx-auto">
