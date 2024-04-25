@@ -1,8 +1,11 @@
+<!-- Summary: This view provides a search box where users can input their query, triggering a search action on pressing enter or clicking the search button. -->
 <div x-data="{
     query: '{{ request('search', '') }}'
 }" x-on:keyup.enter.window="$dispatch('search',{
     search : query
 })" id="search-box">
+
+    {{-- This section contains the search input field and its associated label. --}}
     <div>
         <h3 class="mb-3 text-lg font-semibold text-gray-900">{{ __('blog.search') }}</h3>
         <div class="flex items-center px-3 py-2 mb-3 bg-gray-100 w-52 rounded-2xl">
@@ -17,6 +20,7 @@
                 class="w-40 ml-1 text-xs text-gray-800 bg-transparent border-none outline-none focus:outline-none focus:border-none focus:ring-0 placeholder:text-gray-400"
                 type="text" placeholder="{{ __('blog.search_placeholder') }}">
         </div>
+        {{-- This button triggers the search action when clicked. --}}
         <x-button x-on:click="$dispatch('search',{
             search : query
         })"> {{ __('blog.search') }}
